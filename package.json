@@ -1,0 +1,20 @@
+{
+  "name": "script_inject",
+  "version": "1.0.0",
+  "description": "script injector for webview",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/node": "^26.5.1",
+    "rollup": "^4.63.3",
+    "tslib": "^2.8.1",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3"
+  }
+}

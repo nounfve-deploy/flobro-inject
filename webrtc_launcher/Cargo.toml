@@ -1,0 +1,10 @@
+[package]
+name = "webrtc_launcher"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+hex = "0.4.3"
+rand = "0.10.2"
+url = "2.5.8"
+urlencoding = "2.1.3"
