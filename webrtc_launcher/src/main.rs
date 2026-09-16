@@ -3,24 +3,27 @@ fn main() {
     if !cmd.is_file() {
         panic!("cannot find xbin/flobro in current dir")
     }
+    
     let user = SteamUser::get();
-    let inject = INJECT_TEMPLATE
-        .replace("$__ID__", &user.id)
-        .replace("$__NICKNAME__", &user.nickname);
+    let random_unique = random_hex::<8>();
+    let inject_path = path::absolute(format!("main.{random_unique}.js")).unwrap();
 
     {
         // write to inject main
-        let path = path::absolute("./script_inject/main.js").unwrap();
-        fs::create_dir_all(path.parent().unwrap()).unwrap();
-        fs::write(&path, &inject).unwrap();
+        let inject = INJECT_TEMPLATE
+            .replace("$__ID__", &user.id)
+            .replace("$__NICKNAME__", &user.nickname);
+        fs::write(&inject_path, &inject).unwrap();
     }
     {
-        let room = format!("{ROOM_HOST}/{}", random_hex::<8>());
+        let room = format!("{ROOM_HOST}/{random_unique}");
         let room = urlencoding::encode(&room);
+        let inject = inject_path.to_string_lossy().into_owned();
+        let inject = urlencoding::encode(&inject);
 
         // spawn flobro
         let status = Command::new(cmd)
-            .arg(format!("flobro://open?url={room}"))
+            .arg(format!("flobro://open?url={room}&inject={inject}"))
             .stdin(Stdio::inherit())
             .stdout(Stdio::inherit())
             .stderr(Stdio::inherit())
