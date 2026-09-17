@@ -1,9 +1,9 @@
 fn main() {
     let cmd = path::absolute("./xbin/flobro").unwrap();
-    if !cmd.is_file() {
+    let Ok(cmd) = ensure_executable(cmd) else {
         panic!("cannot find xbin/flobro in current dir")
-    }
-    
+    };
+
     let user = SteamUser::get();
     let random_unique = random_hex::<8>();
     let inject_path = path::absolute(format!("main.{random_unique}.js")).unwrap();
@@ -44,4 +44,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-use crate::{misc::random_hex, steam_user::SteamUser};
+use crate::{
+    misc::{ensure_executable, random_hex},
+    steam_user::SteamUser,
+};
