@@ -17,26 +17,28 @@ def append(path: str, content: str):
         file.write(content)
 
 
-def flobro_url():
-    match platform.system():
-        case "Windows":
-            build = "windows-latest"
-        case "Linux":
-            build = "ubuntu-latest"
-        case _:
-            raise Exception("unknoun system")
-    return f"https://github.com/nounfve-deploy/flobro-app/releases/download/dev-0.1/dev-build-{build}.zip"
+match platform.system():
+    case "Windows":
+        gh_platform = "windows-latest"
+        exe_extension = ".exe"
+    case "Linux":
+        gh_platform = "ubuntu-latest"
+        exe_extension = ""
+    case _:
+        raise Exception("unknoun system")
+flobro_url = f"https://github.com/nounfve-deploy/flobro-app/releases/download/dev-0.1/dev-build-{gh_platform}.zip"
 
 
 # build
 exec("git clean -xfd ./working.temp/")
 exec("npm run build")
 exec("cargo build --release")
-shutil.copy("target/debug/webrtc_launcher", "./working.temp/")
+shutil.copy(f"target/release/webrtc_launcher{exe_extension}", "./working.temp/")
 
 # package
 os.chdir("./working.temp/")
-exec(f"save_point meta include {flobro_url()} --mount xbin")
+exec(f"save_point meta --init")
+exec(f"save_point meta include {flobro_url} --mount xbin")
 # fmt: off
 append(".sip.dir/.sip.yaml", """\
 exec:

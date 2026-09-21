@@ -49,6 +49,6 @@ impl SteamUser {
             Some(id)
         } else {
             None
-        };
+        }
     }
 }
