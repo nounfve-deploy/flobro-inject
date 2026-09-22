@@ -38,3 +38,18 @@ jobs:
           ./build.py
           ls -al working.temp/
         shell: bash
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v7
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: flobro-inject-${{ github.sha }}
+          tag_name: dev
+          files: ./*.zip
+          prerelease: true
+          draft: false
+          overwrite_files: true
