@@ -1,6 +1,6 @@
 use crate::misc::random_hex;
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct SteamUser {
     pub id: String,
     pub nickname: String,
@@ -20,17 +20,7 @@ impl SteamUser {
                 nickname: String::new(),
             }
         } else {
-            Self {
-                id: String::new(),
-                nickname: "nologin".into(),
-            }
-        }
-    }
-
-    pub fn anonymous() -> Self {
-        Self {
-            id: format!("anonymous:{}", random_hex::<4>()),
-            nickname: String::new(),
+            Self::default()
         }
     }
 
@@ -49,6 +39,13 @@ impl SteamUser {
             Some(id)
         } else {
             None
+        }
+    }
+
+    pub fn anonymous() -> Self {
+        Self {
+            id: format!("anonymous:{}", random_hex::<4>()),
+            nickname: String::new(),
         }
     }
 }

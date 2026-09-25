@@ -2,6 +2,9 @@ name: build
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - dev
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
