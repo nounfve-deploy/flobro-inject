@@ -20,14 +20,13 @@ fn main() {
         let inject = urlencoding::encode(&inject);
 
         // spawn flobro
-        let status = Command::new(cmd)
+        Command::new(cmd)
             .arg(format!("flobro://open?url={room}&inject={inject}"))
             .stdin(Stdio::inherit())
             .stdout(Stdio::inherit())
             .stderr(Stdio::inherit())
-            .status()
+            .spawn()
             .unwrap();
-        println!("{status:?}")
     }
 }
 
