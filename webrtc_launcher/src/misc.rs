@@ -8,7 +8,12 @@ pub fn random_hex<const T: usize>() -> String {
     hex::encode(buf).to_string()
 }
 
-pub fn ensure_executable(path: PathBuf) -> std::io::Result<PathBuf> {
+#[allow(unused_mut)]
+pub fn ensure_executable(mut path: PathBuf) -> std::io::Result<PathBuf> {
+    #[cfg(target_os = "windows")]
+    {
+        path = path.with_added_extension("exe");
+    }
     if !path.is_file() {
         return Err(std::io::Error::new(
             std::io::ErrorKind::NotFound,

@@ -1,8 +1,6 @@
 fn main() {
     let cmd = path::absolute("./xbin/flobro").unwrap();
-    let Ok(cmd) = ensure_executable(cmd) else {
-        panic!("cannot find xbin/flobro in current dir")
-    };
+    let cmd = ensure_executable(cmd).unwrap();
 
     let user = SteamUser::get();
     let random_unique = random_hex::<8>();
