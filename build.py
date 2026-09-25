@@ -26,8 +26,7 @@ match platform.system():
         exe_extension = ""
     case _:
         raise Exception("unknoun system")
-flobro_url = f"https://github.com/nounfve-deploy/flobro-app/releases/download/dev-0.1/dev-build-{gh_platform}.zip"
-
+flobro_url = f"https://github.com/nounfve-deploy/flobro-app/releases/download/dev/dev-build-{gh_platform}.zip"
 
 # build
 exec("git clean -xfd ./working.temp/")
