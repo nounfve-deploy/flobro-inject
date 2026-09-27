@@ -49,10 +49,11 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.release.outputs.url }}
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v7
-      - name: Release
+      - uses: actions/download-artifact@v7
+      - id: release
         uses: softprops/action-gh-release@v3
         with:
           name: flobro-inject-${{ github.sha }}
@@ -61,3 +62,8 @@ jobs:
           prerelease: true
           draft: false
           overwrite_files: true
+  publish:
+    needs: release
+    uses: nounfve-deploy/save_point_publish/.github/workflows/publish_notify.yaml@master
+    with:
+      release-url: ${{ needs.release.outputs.url }}
