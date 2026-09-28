@@ -47,14 +47,13 @@ jobs:
       - id: release
         uses: softprops/action-gh-release@v3
         with:
-          name: flobro-inject-${{ github.sha }}
+          name: wstream-${{ github.sha }}
           tag_name: dev
           files: ./*/*.zip
           prerelease: true
           draft: false
           overwrite_files: true
-  publish:
-    needs: release
-    uses: nounfve-deploy/save_point_publish/.github/workflows/publish_notify.yaml@master
-    with:
-      release-url: ${{ needs.release.outputs.url }}
+      - uses: nounfve-deploy/save_point_publish/.github/publish_notify@master
+        with:
+          release-url: ${{ steps.release.outputs.url }}
+    
