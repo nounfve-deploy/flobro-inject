@@ -50,7 +50,7 @@ desc_template:
   title: a webrtc streaming page
   label:
   - tag: dev.sip.shelf/id
-    val: webrtc_streaming
+    val: webrtc_streaming.${platform}
 """)
 # fmt: on
 exec(f"save_point archive create")
